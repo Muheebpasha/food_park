@@ -3,7 +3,7 @@
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AdminAuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [FrontendController::class,'index']);
+
+// admin auth route
+Route::get('admin/login',[AdminAuthController::class,'index'])->name('admin.login');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
