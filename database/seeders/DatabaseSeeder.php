@@ -21,5 +21,7 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Slider::factory(3)->create();
         $this->call(UserSeeder::class);
+        $this->call(WhyChooseUsTitleSeeder::class);
+        \App\Models\WhyChooseUs::factory(3)->create();
     }
 }

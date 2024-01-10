@@ -75,13 +75,23 @@
     <script src="{{ asset('frontend/js/toastr.min.js') }}"></script>
 
     <script>
+
         toastr.options.progressBar = true;
-        @if($errors->any())
+        @if ($errors->any())
             @foreach ($errors->all() as $error)
                 toastr.error("{{ $error }}")
             @endforeach
         @endif
+
+        //set csrf at ajax header
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
     </script>
+    @stack('scripts')
 
 </body>
 

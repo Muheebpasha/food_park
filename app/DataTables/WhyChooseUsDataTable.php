@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Slider;
+use App\Models\WhyChooseU;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class SliderDataTable extends DataTable
+class WhyChooseUsDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -23,31 +23,17 @@ class SliderDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function($query){
-                $edit = "<a href='".route('admin.slider.edit',$query->id)."' class='btn btn-primary'><i class='fas fa-edit'></i></a>";
-                $delete = "<a href='".route('admin.slider.destroy',$query->id)."' class='btn btn-danger delete-item ml-2'><i class='fas fa-trash-alt'></i></a>";
-                return $edit.$delete;
-            })
-            ->addColumn('image',function($query){
-                return '<img src="'.asset($query->image).'" width="100px;">';
-            })
-            ->addColumn('status',function($query){
-                if($query->status === 1)
-                    return  '<span class="badge badge-primary">Active</span>';
-                else
-                    return '<span class="badge badge-danger">InActive</span>';
-            })
-            ->rawColumns(['image','action','status'])
+            ->addColumn('action', 'whychooseus.action')
             ->setRowId('id');
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Slider $model
+     * @param \App\Models\WhyChooseU $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Slider $model): QueryBuilder
+    public function query(WhyChooseU $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -60,11 +46,11 @@ class SliderDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('slider-table')
+                    ->setTableId('whychooseus-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(0)
+                    ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -84,16 +70,15 @@ class SliderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-
-            Column::make('id')->width(60),
-            Column::make('image')->width(150),
-            Column::make('title'),
-            Column::make('status'),
             Column::computed('action')
-            ->exportable(false)
-            ->printable(false)
-            ->width(150)
-            ->addClass('text-center'),
+                  ->exportable(false)
+                  ->printable(false)
+                  ->width(60)
+                  ->addClass('text-center'),
+            Column::make('id'),
+            Column::make('add your columns'),
+            Column::make('created_at'),
+            Column::make('updated_at'),
         ];
     }
 
@@ -104,6 +89,6 @@ class SliderDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Slider_' . date('YmdHis');
+        return 'WhyChooseUs_' . date('YmdHis');
     }
 }

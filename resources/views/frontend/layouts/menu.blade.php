@@ -42,7 +42,7 @@
            <div class="collapse navbar-collapse" id="navbarNav">
                <ul class="navbar-nav m-auto">
                    <li class="nav-item">
-                       <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                       <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Home</a>
                    </li>
                    <li class="nav-item">
                        <a class="nav-link" href="about.html">about</a>
@@ -94,7 +94,7 @@
                        <a class="cart_icon"><i class="fas fa-shopping-basket"></i> <span>5</span></a>
                    </li>
                    <li>
-                       <a href="dashboard.html"><i class="fas fa-user"></i></a>
+                       <a href="{{ route('login') }}"><i class="fas fa-user"></i></a>
                    </li>
                    <li>
                        <a class="common_btn" href="#" data-bs-toggle="modal"
