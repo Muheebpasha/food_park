@@ -3,10 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductGalleryController;
+use App\Http\Controllers\Admin\ProductOptionController;
+use App\Http\Controllers\Admin\ProductSizeController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\WhyChooseUsController;
-use App\Models\WhyChooseUs;
+
 
 Route::group(['prefix'=>'admin','as'=>'admin.'],function(){
 
@@ -29,5 +33,20 @@ Route::group(['prefix'=>'admin','as'=>'admin.'],function(){
 
        /** Product Category Routes */
        Route::resource('category', CategoryController::class);
+
+        /** Product Category Routes */
+        Route::resource('product',ProductController::class);
+
+        /** Product Gallery Routes */
+    Route::get('product-gallery/{product}', [ProductGalleryController::class, 'index'])->name('product-gallery.show-index');
+    Route::resource('product-gallery', ProductGalleryController::class);
+
+    /** Product Size Routes */
+    Route::get('product-size/{product}', [ProductSizeController::class, 'index'])->name('product-size.show-index');
+    Route::resource('product-size', ProductSizeController::class);
+
+    /** Product Size Routes */
+    Route::resource('product-option', ProductOptionController::class);
+
 });
 
