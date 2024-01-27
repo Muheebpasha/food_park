@@ -54,7 +54,7 @@
                         class="fas fa-fire"></i><span>Dashboard</span></a></li>
 
             <li class="menu-header">Starter</li>
-            <li><a class="nav-link" href="{{ route('admin.slider.index') }}">Slider</a></li>
+            <li><a class="nav-link" href="{{ route('admin.slider.index') }}"><i class="fas fa-images"></i>Slider<span>Slider</span></a></li>
             <li><a class="nav-link" href="{{ route('admin.why-choose-us.index') }}">Why Choose Us</a></li>
             <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
@@ -62,10 +62,10 @@
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="{{ route('admin.category.index') }}">Product Categories</a></li>
                     <li><a class="nav-link" href="{{ route('admin.product.index') }}">Products</a></li>
-                    <li><a class="nav-link" href="layout-top-navigation.html">Top Navigation</a></li>
+
                 </ul>
             </li>
-
+            <li><a class="nav-link" href="{{ route('admin.setting.index') }}">Settings</a></li>
         </ul>
 
 

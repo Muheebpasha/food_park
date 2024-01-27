@@ -48,9 +48,9 @@
 
     @include('frontend.home.components.offeritem')
 
-    @include('frontend.home.components.cart_popup')
+    @include('frontend.home.components.cart-popup')
 
-    @include('frontend.home.components.menuitem')
+    @include('frontend.home.components.menu-item')
 
     @include('frontend.home.components.slider')
 

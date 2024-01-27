@@ -22,10 +22,15 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/toastr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
 </head>
 
 <body>
+    <div class="overlay-container d-none">
+        <div class="overlay">
+            <span class="loader"></span>
+        </div>
+    </div>
 
     @include('frontend.layouts.menu')
     @yield('content')
@@ -75,7 +80,6 @@
     <script src="{{ asset('frontend/js/toastr.min.js') }}"></script>
 
     <script>
-
         toastr.options.progressBar = true;
         @if ($errors->any())
             @foreach ($errors->all() as $error)
@@ -91,7 +95,10 @@
             }
         });
     </script>
-    @stack('scripts')
+ <!-- Load global js -->
+ @include('frontend.layouts.global-scripts')
+
+ @stack('scripts')
 
 </body>
 

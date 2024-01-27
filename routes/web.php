@@ -3,8 +3,10 @@
 use App\Http\Controllers\Frontend\FrontendController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\DashboardController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Frontend\WishlistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +19,7 @@ use App\Http\Controllers\Frontend\ProfileController;
 |
 */
 
-Route::get('/', [FrontendController::class,'index']);
+
 
 /** Admin Auth Routes */
 Route::group(['middleware' => 'guest'], function () {
@@ -35,3 +37,28 @@ Route::group(['middleware' => 'auth'],function(){
 
 require __DIR__.'/auth.php';
 
+/** Show Home Page */
+Route::get('/', [FrontendController::class,'index']);
+
+/** Show Product Details Page */
+
+Route::get('/product/{slug}',[FrontendController::class,'showProduct'])->name('product.show');
+
+/** Product Modal Route */
+Route::get('/load-product-modal/{productId}', [FrontendController::class, 'loadProductModal'])->name('load-product-modal');
+
+Route::post('product-review', [FrontendController::class, 'productReviewStore'])->name('product-review.store');
+
+/** Add to cart Route */
+Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
+Route::get('get-cart-products', [CartController::class, 'getCartProduct'])->name('get-cart-products');
+Route::get('cart-product-remove/{rowId}', [CartController::class, 'cartProductRemove'])->name('cart-product-remove');
+
+/** Wishlist Route */
+Route::get('wishlist/{productId}', [WishlistController::class, 'store'])->name('wishlist.store');
+
+
+/** Cart Page Routes */
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart-update-qty', [CartController::class, 'cartQtyUpdate'])->name('cart.quantity-update');
+Route::get('/cart-destroy', [CartController::class, 'cartDestroy'])->name('cart.destroy');
