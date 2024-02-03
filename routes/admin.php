@@ -57,4 +57,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::put('/logo-setting', [SettingController::class, 'UpdateLogoSetting'])->name('logo-setting.update');
     Route::put('/appearance-setting', [SettingController::class, 'UpdateAppearanceSetting'])->name('appearance-setting.update');
     Route::put('/seo-setting', [SettingController::class, 'UpdateSeoSetting'])->name('seo-setting.update');
+
+     /** Menu builder Routes */
+     Route::get('menu-builder', [MenuBuilderController::class, 'index'])->name('menu-builder.index');
 });

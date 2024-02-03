@@ -19646,6 +19646,69 @@
      
 }
 
+    namespace Efectn\Menu\Facades { 
+            /**
+     * 
+     *
+     */ 
+        class Menu {
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function render()
+        {
+                        /** @var \Efectn\Menu\MenuBuilder $instance */
+                        return $instance->render();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function scripts()
+        {
+                        /** @var \Efectn\Menu\MenuBuilder $instance */
+                        return $instance->scripts();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function select($name = 'menu', $menulist = [])
+        {
+                        /** @var \Efectn\Menu\MenuBuilder $instance */
+                        return $instance->select($name, $menulist);
+        }
+                    /**
+         * Returns empty array if menu not found now.
+         * 
+         * Thanks @sovichet
+         *
+         * @param $name
+         * @return array 
+         * @static 
+         */ 
+        public static function getByName($name)
+        {
+                        return \Efectn\Menu\MenuBuilder::getByName($name);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function get($menu_id)
+        {
+                        return \Efectn\Menu\MenuBuilder::get($menu_id);
+        }
+         
+    }
+     
+}
+
     namespace Collective\Html { 
             /**
      * 
@@ -25630,6 +25693,7 @@ namespace  {
             class Vite extends \Illuminate\Support\Facades\Vite {}
             class Cart extends \Gloudemans\Shoppingcart\Facades\Cart {}
             class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar {}
+            class Menu extends \Efectn\Menu\Facades\Menu {}
             class Form extends \Collective\Html\FormFacade {}
             class Html extends \Collective\Html\HtmlFacade {}
             class Flasher extends \Flasher\Laravel\Facade\Flasher {}

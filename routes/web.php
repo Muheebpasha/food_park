@@ -62,3 +62,35 @@ Route::get('wishlist/{productId}', [WishlistController::class, 'store'])->name('
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart-update-qty', [CartController::class, 'cartQtyUpdate'])->name('cart.quantity-update');
 Route::get('/cart-destroy', [CartController::class, 'cartDestroy'])->name('cart.destroy');
+
+/** Coupon Routes */
+Route::post('/apply-coupon', [FrontendController::class, 'applyCoupon'])->name('apply-coupon');
+Route::get('/destroy-coupon', [FrontendController::class, 'destroyCoupon'])->name('destroy-coupon');
+
+
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::get('checkout/{id}/delivery-cal', [CheckoutController::class, 'CalculateDeliveryCharge'])->name('checkout.delivery-cal');
+    Route::post('checkout', [CheckoutController::class, 'checkoutRedirect'])->name('checkout.redirect');
+
+    /** Payment Routes */
+    Route::get('payment', [PaymentController::class, 'index'])->name('payment.index');
+    Route::post('make-payment', [PaymentController::class, 'makePayment'])->name('make-payment');
+
+    Route::get('payment-success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
+    Route::get('payment-cancel', [PaymentController::class, 'paymentCancel'])->name('payment.cancel');
+
+    /** PayPal Routes */
+    Route::get('paypal/payment', [PaymentController::class, 'payWithPaypal'])->name('paypal.payment');
+    Route::get('paypal/success', [PaymentController::class, 'paypalSuccess'])->name('paypal.success');
+    Route::get('paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
+
+    /** Stripe Routes */
+    Route::get('stripe/payment', [PaymentController::class, 'payWithStripe'])->name('stripe.payment');
+    Route::get('stripe/success', [PaymentController::class, 'stripeSuccess'])->name('stripe.success');
+    Route::get('stripe/cancel', [PaymentController::class, 'stripeCancel'])->name('stripe.cancel');
+
+    /** Stripe Routes */
+    Route::get('razorpay-redirect', [PaymentController::class, 'razorpayRedirect'])->name('razorpay-redirect');
+    Route::post('razorpay/payment', [PaymentController::class, 'payWithRazorpay'])->name('razorpay.payment');
+});
