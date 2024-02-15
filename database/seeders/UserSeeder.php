@@ -5,11 +5,9 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
-    protected static ?string $password;
     /**
      * Run the database seeds.
      */
@@ -17,17 +15,17 @@ class UserSeeder extends Seeder
     {
         User::insert([
             [
-            'name'=>'admin',
-            'email'=>'admin@gmail.com',
-            'role'=>'admin',
-            'password'=>static::$password ??= Hash::make('password'),
+                'name' => 'Admin',
+                'email' => 'admin@gmail.com',
+                'role' => 'admin',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' // password
             ],
             [
-                'name'=>'user',
-                'email'=>'user@gmail.com',
-                'role'=>'user',
-                'password'=>static::$password ??= Hash::make('password'),
-                ]
-            ]);
+                'name' => 'User',
+                'email' => 'user@gmail.com',
+                'role' => 'user',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' // password
+            ],
+        ]);
     }
 }

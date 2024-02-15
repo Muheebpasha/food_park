@@ -18,12 +18,14 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-
-        \App\Models\Slider::factory(3)->create();
         $this->call(UserSeeder::class);
         $this->call(WhyChooseUsTitleSeeder::class);
+        \App\Models\Slider::factory(3)->create();
         \App\Models\WhyChooseUs::factory(3)->create();
         $this->call(CategorySeeder::class);
         \App\Models\Product::factory(10)->create();
+        \App\Models\Coupon::factory(3)->create();
+        $this->call(MenuBuilderSeeder::class);
+
     }
 }

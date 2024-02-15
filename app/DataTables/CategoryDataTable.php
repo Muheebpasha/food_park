@@ -15,40 +15,39 @@ use Yajra\DataTables\Services\DataTable;
 class CategoryDataTable extends DataTable
 {
     /**
-     * Build DataTable class.
+     * Build the DataTable class.
      *
      * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-                    ->addColumn('action', function($query){
-                        $edit = "<a href='".route('admin.category.edit',$query->id)."' class='btn btn-primary'><i class='fas fa-edit'></i></a>";
-                        $delete = "<a href='".route('admin.category.destroy',$query->id)."' class='btn btn-danger delete-item ml-2'><i class='fas fa-trash-alt'></i></a>";
-                        return $edit.$delete;
-                    })
-                    ->addColumn('show_at_home',function($query){
-                        if($query->show_at_home === 1)
-                            return  '<span class="badge badge-primary">Yes</span>';
-                        else
-                            return '<span class="badge badge-danger">No</span>';
-                    })
-                    ->addColumn('status',function($query){
-                        if($query->status === 1)
-                            return  '<span class="badge badge-primary">Active</span>';
-                        else
-                            return '<span class="badge badge-danger">InActive</span>';
-                    })
-                    ->rawColumns(['action','show_at_home','status'])
-                    ->setRowId('id');
+            ->addColumn('action', function($query){
+                $edit = "<a href='".route('admin.category.edit', $query->id)."' class='btn btn-primary'><i class='fas fa-edit'></i></a>";
+                $delete = "<a href='".route('admin.category.destroy', $query->id)."' class='btn btn-danger delete-item ml-2'><i class='fas fa-trash'></i></a>";
+
+                return $edit.$delete;
+            })
+            ->addColumn('show_at_home', function($query){
+                if($query->show_at_home === 1){
+                    return '<span class="badge badge-primary">Yes</span>';
+                }else {
+                    return '<span class="badge badge-danger">No</span>';
+                }
+            })
+            ->addColumn('status', function($query){
+                if($query->status === 1){
+                    return '<span class="badge badge-primary">Active</span>';
+                }else {
+                    return '<span class="badge badge-danger">Inactive</span>';
+                }
+            })
+            ->rawColumns(['show_at_home', 'status', 'action'])
+            ->setRowId('id');
     }
 
     /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Category $model
-     * @return \Illuminate\Database\Eloquent\Builder
+     * Get the query source of dataTable.
      */
     public function query(Category $model): QueryBuilder
     {
@@ -56,9 +55,7 @@ class CategoryDataTable extends DataTable
     }
 
     /**
-     * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
+     * Optional method if you want to use the html builder.
      */
     public function html(): HtmlBuilder
     {
@@ -81,8 +78,6 @@ class CategoryDataTable extends DataTable
 
     /**
      * Get the dataTable columns definition.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
@@ -90,21 +85,18 @@ class CategoryDataTable extends DataTable
 
             Column::make('id'),
             Column::make('name'),
-            Column::make('name'),
             Column::make('show_at_home'),
             Column::make('status'),
             Column::computed('action')
-                    ->exportable(false)
-                    ->printable(false)
-                    ->width(150)
-                    ->addClass('text-center'),
+            ->exportable(false)
+            ->printable(false)
+            ->width(150)
+            ->addClass('text-center'),
         ];
     }
 
     /**
-     * Get filename for export.
-     *
-     * @return string
+     * Get the filename for export.
      */
     protected function filename(): string
     {

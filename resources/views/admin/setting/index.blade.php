@@ -43,9 +43,9 @@
                     <div class="col-12 col-sm-12 col-md-10">
                         <div class="tab-content no-padding" id="myTab2Content">
 
-                             @include('admin.setting.sections.general-setting')
+                            @include('admin.setting.sections.general-setting')
 
-                           {{-- @include('admin.setting.sections.logo-setting')
+                            @include('admin.setting.sections.logo-setting')
 
                             @include('admin.setting.sections.appearance-setting')
 
@@ -53,7 +53,7 @@
 
                             @include('admin.setting.sections.mail-setting')
 
-                            @include('admin.setting.sections.seo-setting') --}}
+                            @include('admin.setting.sections.seo-setting')
 
 
                         </div>

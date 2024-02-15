@@ -1,4 +1,5 @@
 @extends('admin.layouts.master')
+
 @section('content')
     <section class="section">
         <div class="section-header">
@@ -10,16 +11,14 @@
                 <h4>All Sliders</h4>
                 <div class="card-header-action">
                     <a href="{{ route('admin.slider.create') }}" class="btn btn-primary">
-                        Create New
+                        Create new
                     </a>
                 </div>
             </div>
             <div class="card-body">
-                <p>{{ $dataTable->table() }}</p>
+                {{ $dataTable->table() }}
             </div>
         </div>
-
-
     </section>
 @endsection
 

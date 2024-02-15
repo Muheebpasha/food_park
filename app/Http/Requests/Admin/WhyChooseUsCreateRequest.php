@@ -17,15 +17,15 @@ class WhyChooseUsCreateRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
     public function rules(): array
     {
         return [
-            'icon' => ['required','max:50'],
-            'title' => ['required','max:255'],
-            'short_description' => ['required','max:500'],
-            'status' => ['required','boolean']
+            'icon' => ['required', 'max:50'],
+            'title' => ['required', 'max:255'],
+            'short_description' => ['required', 'max:500'],
+            'status' => ['required', 'boolean']
         ];
     }
 }

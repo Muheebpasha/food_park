@@ -15,10 +15,9 @@ use Yajra\DataTables\Services\DataTable;
 class ProductDataTable extends DataTable
 {
     /**
-     * Build DataTable class.
+     * Build the DataTable class.
      *
      * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -60,18 +59,15 @@ class ProductDataTable extends DataTable
             ->addColumn('image', function($query){
                 return '<img width="60px" src="'.asset($query->thumb_image).'">';
             })
-            // ->addColumn('category', function($query){
-            //     return $query->category->name;
-            // })
+            ->addColumn('category', function($query){
+                return $query->category->name;
+            })
             ->rawColumns(['offer_price', 'price', 'status', 'show_at_home', 'action', 'image'])
             ->setRowId('id');
     }
 
     /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Product $model
-     * @return \Illuminate\Database\Eloquent\Builder
+     * Get the query source of dataTable.
      */
     public function query(Product $model): QueryBuilder
     {
@@ -79,9 +75,7 @@ class ProductDataTable extends DataTable
     }
 
     /**
-     * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
+     * Optional method if you want to use the html builder.
      */
     public function html(): HtmlBuilder
     {
@@ -90,7 +84,7 @@ class ProductDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(0,'asc')
+                    ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -104,16 +98,15 @@ class ProductDataTable extends DataTable
 
     /**
      * Get the dataTable columns definition.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
         return [
+
             Column::make('id'),
             Column::make('image'),
             Column::make('name'),
-            // Column::make('category'),
+            Column::make('category'),
             Column::make('price'),
             Column::make('offer_price'),
             Column::make('quantity'),
@@ -128,9 +121,7 @@ class ProductDataTable extends DataTable
     }
 
     /**
-     * Get filename for export.
-     *
-     * @return string
+     * Get the filename for export.
      */
     protected function filename(): string
     {

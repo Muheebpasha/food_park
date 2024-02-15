@@ -13,7 +13,7 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::insert([
+       Category::insert([
             [
                 'name' => 'Burger',
                 'slug' => 'burger',
@@ -21,17 +21,17 @@ class CategorySeeder extends Seeder
                 'show_at_home' => 1
             ],
             [
-                'name' => 'Sanwish',
-                'slug' => 'sanwish',
+                'name' => 'Sandwich',
+                'slug' => 'sandwich',
                 'status' => 1,
                 'show_at_home' => 1
             ],
             [
-                'name' => 'Pizza',
-                'slug' => 'pizza',
+                'name' => 'Taco',
+                'slug' => 'taco',
                 'status' => 1,
                 'show_at_home' => 1
-            ],
+            ]
         ]);
     }
 }

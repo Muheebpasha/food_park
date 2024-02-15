@@ -20,30 +20,13 @@ class WhyChooseUsController extends Controller
     {
         $keys = ['why_choose_top_title', 'why_choose_main_title', 'why_choose_sub_title'];
         $titles = SectionTitle::whereIn('key', $keys)->pluck('value','key');
-
         return $dataTable->render('admin.why-choose-us.index', compact('titles'));
-    }
-
-    public function updateTitle(Request $request)
-    {
-        $request->validate([
-            'why_choose_top_title' => 'max:100',
-            'why_choose_main_title' => 'max:200',
-            'why_choose_sub_title' => 'max:500'
-        ]);
-
-        SectionTitle::updateOrCreate(['key' => 'why_choose_top_title'],['value'=>$request->why_choose_top_title]);
-        SectionTitle::updateOrCreate(['key' => 'why_choose_main_title'],['value'=>$request->why_choose_main_title]);
-        SectionTitle::updateOrCreate(['key' => 'why_choose_sub_title'],['value'=>$request->why_choose_main_title]);
-
-        toastr()->success('Updated Successfully!');
-        return redirect()->back();
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create() :View
+    public function create() : View
     {
         return view('admin.why-choose-us.create');
     }
@@ -54,26 +37,20 @@ class WhyChooseUsController extends Controller
     public function store(WhyChooseUsCreateRequest $request) : RedirectResponse
     {
         WhyChooseUs::create($request->validated());
+
         toastr()->success('Created Successfully');
+
         return to_route('admin.why-choose-us.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id) :View
+    public function edit(string $id) : View
     {
         $whyChooseUs = WhyChooseUs::findOrFail($id);
-
-        return view('admin.why-choose-us.edit',compact('whyChooseUs'));
+        return view('admin.why-choose-us.edit', compact('whyChooseUs'));
     }
 
     /**
@@ -83,8 +60,37 @@ class WhyChooseUsController extends Controller
     {
         $whyChooseUs = WhyChooseUs::findOrFail($id);
         $whyChooseUs->update($request->validated());
-        toastr()->success('Updated Successfully');
+
+        toastr()->success('Created Successfully');
+
         return to_route('admin.why-choose-us.index');
+    }
+
+    public function updateTitle(Request $request) {
+        $request->validate([
+            'why_choose_top_title' => ['max:100'],
+            'why_choose_main_title' => ['max:200'],
+            'why_choose_sub_title' => ['max:500']
+        ]);
+
+        SectionTitle::updateOrCreate(
+            ['key' => 'why_choose_top_title'],
+            ['value' => $request->why_choose_top_title]
+        );
+
+        SectionTitle::updateOrCreate(
+            ['key' => 'why_choose_main_title'],
+            ['value' => $request->why_choose_main_title]
+        );
+
+        SectionTitle::updateOrCreate(
+            ['key' => 'why_choose_sub_title'],
+            ['value' => $request->why_choose_sub_title]
+        );
+
+        toastr()->success('Updated Successfully!');
+
+        return redirect()->back();
     }
 
     /**
@@ -92,12 +98,12 @@ class WhyChooseUsController extends Controller
      */
     public function destroy(string $id)
     {
-        try {
+        try{
             $whyChooseUs = WhyChooseUs::findOrFail($id);
             $whyChooseUs->delete();
-            return response(['status'=>'success','message'=>'Deleted Successfully']);
-        } catch(\Exception $e) {
-            return response(['status'=>'error','message'=>'Something Went Wrong']);
+            return response(['status' => 'success', 'message' => 'Deleted Successfully']);
+        }catch(\Exception $e){
+            return response(['status' => 'error', 'message' => 'something went wrong!']);
         }
     }
 }

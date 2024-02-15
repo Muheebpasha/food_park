@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\WhyChooseU;
 use App\Models\WhyChooseUs;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -15,38 +16,35 @@ use Yajra\DataTables\Services\DataTable;
 class WhyChooseUsDataTable extends DataTable
 {
     /**
-     * Build DataTable class.
+     * Build the DataTable class.
      *
      * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function($query){
-                $edit = "<a href='".route('admin.why-choose-us.edit',$query->id)."' class='btn btn-primary'><i class='fas fa-edit'></i></a>";
-                $delete = "<a href='".route('admin.why-choose-us.destroy',$query->id)."' class='btn btn-danger delete-item ml-2'><i class='fas fa-trash'></i></a>";
+            ->addColumn('action', function ($query) {
+                $edit = "<a href='" . route('admin.why-choose-us.edit', $query->id) . "' class='btn btn-primary'><i class='fas fa-edit'></i></a>";
+                $delete = "<a href='" . route('admin.why-choose-us.destroy', $query->id) . "' class='btn btn-danger delete-item ml-2'><i class='fas fa-trash'></i></a>";
+
                 return $edit . $delete;
             })
-            ->addColumn('icon',function($query){
-                return "<i style='50px' class='".$query->icon."'></i>";
+            ->addColumn('icon', function ($query) {
+                return "<i style='font-size:50px' class='" . $query->icon . "'></i>";
             })
-            ->addColumn('status',function($query){
-                if($query->status === 1) {
+            ->addColumn('status', function ($query) {
+                if ($query->status === 1) {
                     return '<span class="badge badge-primary">Active</span>';
                 } else {
                     return '<span class="badge badge-danger">InActive</span>';
                 }
             })
-            ->rawColumns(['icon','action','status'])
+            ->rawColumns(['icon', 'action', 'status'])
             ->setRowId('id');
     }
 
     /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\WhyChooseUs $model
-     * @return \Illuminate\Database\Eloquent\Builder
+     * Get the query source of dataTable.
      */
     public function query(WhyChooseUs $model): QueryBuilder
     {
@@ -54,33 +52,29 @@ class WhyChooseUsDataTable extends DataTable
     }
 
     /**
-     * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
+     * Optional method if you want to use the html builder.
      */
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('whychooseus-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(0,'asc')
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('whychooseus-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(0, 'asc')
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
      * Get the dataTable columns definition.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
@@ -88,19 +82,18 @@ class WhyChooseUsDataTable extends DataTable
 
             Column::make('id'),
             Column::make('icon'),
+            Column::make('title'),
             Column::make('status'),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(150)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(150)
+                ->addClass('text-center'),
         ];
     }
 
     /**
-     * Get filename for export.
-     *
-     * @return string
+     * Get the filename for export.
      */
     protected function filename(): string
     {

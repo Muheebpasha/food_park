@@ -8,7 +8,6 @@ use App\Http\Requests\Admin\SliderCreateRequest;
 use App\Http\Requests\Admin\SliderUpdateRequest;
 use App\Models\Slider;
 use App\Traits\FileUploadTrait;
-use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,7 +26,7 @@ class SliderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create() : View
+    public function create(): View
     {
         return view('admin.slider.create');
     }
@@ -37,30 +36,31 @@ class SliderController extends Controller
      */
     public function store(SliderCreateRequest $request)
     {
-          /** Handle image upload */
-          $imagePath = $this->uploadImage($request, 'image');
+        /** Handle image upload */
+        $imagePath = $this->uploadImage($request, 'image');
 
-          $slider = new Slider();
-          $slider->image = $imagePath;
-          $slider->offer = $request->offer;
-          $slider->title = $request->title;
-          $slider->sub_title = $request->sub_title;
-          $slider->short_description = $request->short_description;
-          $slider->button_link = $request->button_link;
-          $slider->status = $request->status;
-          $slider->save();
+        $slider = new Slider();
+        $slider->image = $imagePath;
+        $slider->offer = $request->offer;
+        $slider->title = $request->title;
+        $slider->sub_title = $request->sub_title;
+        $slider->short_description = $request->short_description;
+        $slider->button_link = $request->button_link;
+        $slider->status = $request->status;
+        $slider->save();
 
-          toastr()->success('Created Successfully');
+        toastr()->success('Created Successfully');
 
-          return to_route('admin.slider.index');
+        return to_route('admin.slider.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): View
     {
-        //
+        $slider = Slider::findOrFail($id);
+        return view('admin.slider.show', compact('slider'));
     }
 
     /**
@@ -101,14 +101,14 @@ class SliderController extends Controller
      */
     public function destroy(string $id)
     {
+        return $id;
         try {
             $slider = Slider::findOrFail($id);
             $this->removeImage($slider->image);
             $slider->delete();
-            return response(['status'=>'success','message'=>'Deleted Successfully!']);
-        }
-        catch(Exception $e) {
-            return response(['status'=>'error','message'=>$e->getMessage()]);
+            return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+        } catch (\Exception $e) {
+            return response(['status' => 'error', 'message' => 'something went wrong!']);
         }
     }
 }

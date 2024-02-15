@@ -15,37 +15,33 @@ use Yajra\DataTables\Services\DataTable;
 class SliderDataTable extends DataTable
 {
     /**
-     * Build DataTable class.
+     * Build the DataTable class.
      *
      * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function($query){
-                $edit = "<a href='".route('admin.slider.edit',$query->id)."' class='btn btn-primary'><i class='fas fa-edit'></i></a>";
-                $delete = "<a href='".route('admin.slider.destroy',$query->id)."' class='btn btn-danger delete-item ml-2'><i class='fas fa-trash-alt'></i></a>";
+                $edit = "<a href='".route('admin.slider.edit', $query->id)."' class='btn btn-primary'><i class='fas fa-edit'></i></a>";
+                $delete = "<a href='".route('admin.slider.destroy', $query->id)."' class='btn btn-danger delete-item ml-2'><i class='fas fa-trash'></i></a>";
+
                 return $edit.$delete;
-            })
-            ->addColumn('image',function($query){
-                return '<img src="'.asset($query->image).'" width="100px;">';
-            })
-            ->addColumn('status',function($query){
-                if($query->status === 1)
-                    return  '<span class="badge badge-primary">Active</span>';
-                else
+            })->addColumn('image', function($query){
+                return '<img width="100px" src="'.asset($query->image).'">';
+            })->addColumn('status', function($query){
+                if($query->status === 1){
+                    return '<span class="badge badge-primary">Active</span>';
+                }else {
                     return '<span class="badge badge-danger">InActive</span>';
+                }
             })
-            ->rawColumns(['image','action','status'])
+            ->rawColumns(['image', 'action', 'status'])
             ->setRowId('id');
     }
 
     /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Slider $model
-     * @return \Illuminate\Database\Eloquent\Builder
+     * Get the query source of dataTable.
      */
     public function query(Slider $model): QueryBuilder
     {
@@ -53,9 +49,7 @@ class SliderDataTable extends DataTable
     }
 
     /**
-     * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
+     * Optional method if you want to use the html builder.
      */
     public function html(): HtmlBuilder
     {
@@ -78,8 +72,6 @@ class SliderDataTable extends DataTable
 
     /**
      * Get the dataTable columns definition.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
@@ -94,13 +86,12 @@ class SliderDataTable extends DataTable
             ->printable(false)
             ->width(150)
             ->addClass('text-center'),
+
         ];
     }
 
     /**
-     * Get filename for export.
-     *
-     * @return string
+     * Get the filename for export.
      */
     protected function filename(): string
     {

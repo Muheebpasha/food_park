@@ -199,18 +199,14 @@
             });
 
             $('.decrement').on('click', function() {
-
                 let inputField = $(this).siblings(".quantity");
                 let currentValue = parseInt(inputField.val());
                 let rowId = inputField.data("id");
 
-                if(currentValue > 1) {
-                    inputField.val(currentValue - 1);
-                }
-                else{
-                    alert("Cannot be less than 1");
-                }
+                inputField.val(currentValue - 1);
+
                 if (inputField.val() > 1) {
+
                     cartQtyUpdate(rowId, inputField.val(), function(response) {
                         if (response.status === 'success') {
                             inputField.val(response.qty);

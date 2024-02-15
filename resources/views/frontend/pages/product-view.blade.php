@@ -355,7 +355,7 @@
 
                 // Calculate the total price
                 let totalPrice = (basePrice + selectedSizePrice + selectedOptionsPrice) * quantity;
-                $('#v_total_price').text("{{ config('settings.site_currency_icon') }}" + totalPrice.toFixed(2));
+                $('#v_total_price').text("{{ config('settings.site_currency_icon') }}" + totalPrice);
             }
 
             $('.v_submit_button').on('click', function(e){

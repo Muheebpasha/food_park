@@ -104,10 +104,10 @@ class CartController extends Controller
             $cart = Cart::update($request->rowId, $request->qty);
             return response([
                 'status' => 'success',
-                'product_total' => number_format(productTotal($request->rowId),2),
+                'product_total' => productTotal($request->rowId),
                 'qty' => $cart->qty,
-                'cart_total' =>number_format(cartTotal(), 2),
-                'grand_cart_total' => number_format(grandCartTotal(),2)
+                'cart_total' => cartTotal(),
+                'grand_cart_total' => grandCartTotal()
             ], 200);
 
         }catch(\Exception $e){
