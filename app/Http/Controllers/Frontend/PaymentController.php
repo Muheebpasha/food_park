@@ -45,16 +45,57 @@ class PaymentController extends Controller
         return view('frontend.pages.payment-cancel');
     }
 
+    function cashOnDelivery()
+    {
+        $orderService = new OrderService(); 
+        
+         if ($orderService->createOrder()) {
+            /** calculate payable amount */
+            
+            $payableAmount = session()->get('grand_total');
+           
+            $orderId = session()->get('order_id');
+            
+            $paymentInfo = [
+                'transaction_id' => (string) now()->timestamp,
+                'currency' => 'INR',
+                'status' => 'completed'
+            ];
+            
+            OrderPaymentUpdateEvent::dispatch($orderId, $paymentInfo, 'Cash');
+            //OrderPlacedNotificationEvent::dispatch($orderId);
+            //RTOrderPlacedNotificationEvent::dispatch(Order::find($orderId));
+
+            
+            /** Clear session data */
+            $orderService->clearSession();
+
+            return response()->json(['redirect_url' => route('payment.success')]);
+            
+         }
+    }
+
     function makePayment(Request $request, OrderService $orderService)
     {
+
         $request->validate([
-            'payment_gateway' => ['required', 'string', 'in:paypal,stripe,razorpay']
+            'payment_gateway' => ['required', 'string', 'in:cashOnDelivery,paypal,stripe,razorpay']
         ]);
+
+        if($request->payment_gateway === 'cashOnDelivery')
+        {
+           return $this->cashOnDelivery();
+        }
+
 
         /** Create Order */
         if ($orderService->createOrder()) {
             // redirect user to the payment host
             switch ($request->payment_gateway) {
+                case 'cashOnDelivery':
+                    return response(['redirect_url' => route('cashOnDelivery')]);
+                    break;
+
                 case 'paypal':
                     return response(['redirect_url' => route('paypal.payment')]);
                     break;

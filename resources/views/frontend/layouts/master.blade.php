@@ -40,8 +40,9 @@
         var loggedInUserId = "{{ auth()->user()->id ?? '' }}";
     </script>
 
-    {{-- @vite(['resources/js/app.js', 'resources/js/frontend.js']) --}}
-    <!-- <link rel="stylesheet" href="css/rtl.css"> -->
+
+    @vite(['resources/js/app.js', 'resources/js/frontend.js'])
+    {{-- <link rel="stylesheet" href="css/rtl.css"> --}}
 </head>
 
 <body>

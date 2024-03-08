@@ -101,6 +101,7 @@ class SettingController extends Controller
 
     function UpdateLogoSetting(Request $request): RedirectResponse
     {
+
         $validatedData = $request->validate([
             'logo' => ['nullable', 'image', 'max:1000'],
             'footer_logo' => ['nullable', 'image', 'max:1000'],
@@ -108,14 +109,19 @@ class SettingController extends Controller
             'breadcrumb' => ['nullable', 'image', 'max:1000'],
         ]);
 
+        
+
         foreach ($validatedData as $key => $value) {
 
             $imagePatch = $this->uploadImage($request, $key);
+            
             if (!empty($imagePatch)) {
+                
                 $oldPath = config('settings.' . $key);
-                $this->removeImage($oldPath);
-
-                Setting::updateOrCreate(
+                if($oldPath) {
+                    $this->removeImage($oldPath);
+                }
+                $setting = Setting::updateOrCreate(
                     ['key' => $key],
                     ['value' => $imagePatch]
                 );

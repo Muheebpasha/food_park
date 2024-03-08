@@ -14,7 +14,7 @@ class PaymentGatewaySettingController extends Controller
     use FileUploadTrait;
 
     function index() : View {
-        $paymentGateway = PaymentGatewaySetting::pluck('value', 'key');
+       $paymentGateway = PaymentGatewaySetting::pluck('value', 'key');
         return view('admin.payment-setting.index', compact('paymentGateway'));
     }
 

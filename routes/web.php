@@ -118,6 +118,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('checkout/{id}/delivery-cal', [CheckoutController::class, 'CalculateDeliveryCharge'])->name('checkout.delivery-cal');
     Route::post('checkout', [CheckoutController::class, 'checkoutRedirect'])->name('checkout.redirect');
 
+    Route::get('cash-on-delivery',[PaymentController::class,'cashOnDelivery'])->name('cashOnDelivery');
+
     /** Payment Routes */
     Route::get('payment', [PaymentController::class, 'index'])->name('payment.index');
     Route::post('make-payment', [PaymentController::class, 'makePayment'])->name('make-payment');

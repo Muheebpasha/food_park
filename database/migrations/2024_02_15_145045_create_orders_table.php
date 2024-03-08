@@ -28,6 +28,7 @@ return new class extends Migration
             $table->json('coupon_info')->nullable();
             $table->string('currency_name')->nullable();
             $table->string('order_status')->default('pending');
+            $table->foreignId('address_id')->constrained()
             $table->timestamps();
         });
     }

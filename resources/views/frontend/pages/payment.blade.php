@@ -32,6 +32,12 @@
                 <div class="col-lg-8">
                     <div class="fp__payment_area">
                         <div class="row">
+                        <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
+                            <a class="fp__single_payment payment-card" data-name="cashOnDelivery" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                href="#">
+                            <img src="{{ asset('frontend/images/cash-on-delivery.png') }}" alt="payment method" class="img-fluid w-100">
+                            </a>
+                        </div>
                         @if(config('gatewaySettings.paypal_status'))
                         <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
                             <a class="fp__single_payment payment-card" data-name="paypal" data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -86,7 +92,7 @@
                 e.preventDefault();
 
                 let paymentGateway = $(this).data('name');
-
+               
                 $.ajax({
                     method: 'POST',
                     url: '{{ route("make-payment") }}',
@@ -97,7 +103,8 @@
                         showLoader();
                     },
                     success: function(response) {
-                        window.location.href = response.redirect_url;
+                        console.log(response);
+                       window.location.href = response.redirect_url;
                     },
                     error: function(xhr, status, error){
                         let errors = xhr.responseJSON.errors;

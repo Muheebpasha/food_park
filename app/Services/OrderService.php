@@ -9,6 +9,8 @@ class OrderService {
     /** Store Order in Database  */
     function createOrder() {
         try {
+            \DB::beginTransaction();
+    
             $order = new Order();
             $order->invoice_id = generateInvoiceId();
             $order->user_id = auth()->user()->id;
@@ -27,7 +29,7 @@ class OrderService {
             $order->order_status = 'pending';
             $order->address_id = session()->get('address_id');
             $order->save();
-
+    
             foreach(\Cart::content() as $product) {
                 $orderItem = new OrderItem();
                 $orderItem->order_id = $order->id;
@@ -39,18 +41,17 @@ class OrderService {
                 $orderItem->product_option = json_encode($product->options->product_options);
                 $orderItem->save();
             }
-
-            /** Putting the Order id in session */
+    
+            \DB::commit();
+    
             session()->put('order_id', $order->id);
-
-            /** Putting the grand total amount in session */
             session()->put('grand_total', $order->grand_total);
-
-
+    
             return true;
-        }catch(\Exception $e){
+        } catch(\Exception $e) {
+            \DB::rollBack();
             logger($e);
-
+    
             return false;
         }
     }
